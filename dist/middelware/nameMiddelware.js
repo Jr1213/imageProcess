@@ -1,13 +1,38 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = require("fs");
+const path_1 = __importDefault(require("path"));
 const nameMiddelWare = (req, res, next) => {
-    let name = req.query.name;
-    if (name != null) {
+    const imageName = req.query.name;
+    const height = req.query.h;
+    const width = req.query.w;
+    (0, fs_1.readFile)(path_1.default.resolve(`full/${imageName}.jpg`), (err, data) => {
+        if (!data) {
+            res.status(404);
+            res.end('image not found');
+        }
+    });
+    if (imageName && height && width) {
         next();
+        return;
     }
-    else {
+    if (!imageName) {
         res.status(404);
-        res.send('image not found');
+        res.end('name is required');
+        return;
+    }
+    if (!height) {
+        res.status(404);
+        res.end('height is required');
+        return;
+    }
+    if (!width) {
+        res.status(404);
+        res.end('width is required');
+        return;
     }
 };
 exports.default = nameMiddelWare;

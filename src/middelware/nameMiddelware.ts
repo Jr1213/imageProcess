@@ -9,7 +9,7 @@ const nameMiddelWare = (req: Request, res: Response, next: Function): void => {
   readFile(path.resolve(`full/${imageName}.jpg`), (err, data) => {
     if (!data) {
       res.status(404);
-      res.send('image not found');
+      res.end('image not found');
     }
   });
   if (imageName && height && width) {
@@ -18,19 +18,19 @@ const nameMiddelWare = (req: Request, res: Response, next: Function): void => {
   }
   if (!imageName) {
     res.status(404);
-    res.send('name is required');
+    res.end('name is required');
     return;
   }
 
   if (!height) {
     res.status(404);
-    res.send('height is required');
+    res.end('height is required');
     return;
   }
 
   if (!width) {
     res.status(404);
-    res.send('width is required');
+    res.end('width is required');
     return;
   }
 };

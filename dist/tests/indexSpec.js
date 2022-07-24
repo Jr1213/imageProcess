@@ -17,14 +17,9 @@ const index_1 = __importDefault(require("../index"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('test images endpoint', () => {
     it('request sucess', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api?name=img1.jpg&w=100&h=200');
+        const response = yield request.get('/api?name=img1&w=100&h=200');
         expect(response.type).toEqual('image/jpeg');
         expect(response.statusCode).toEqual(200);
-    }));
-    it('return original image ig now width or height exist', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api?name=img1.jpg');
-        expect(response.statusCode).toEqual(200);
-        expect(response.type).toEqual('image/jpeg');
     }));
 });
 describe('end point failuer', () => {

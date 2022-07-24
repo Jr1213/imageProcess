@@ -1,37 +1,31 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const path_1 = __importDefault(require("path"));
-const sharp_1 = __importDefault(require("sharp"));
 const nameMiddelware_1 = __importDefault(require("./middelware/nameMiddelware"));
+const imageProcess_1 = __importDefault(require("./utility/imageProcess"));
+const existedImageMiddelware_1 = __importDefault(require("./middelware/existedImageMiddelware"));
 const app = (0, express_1.default)();
 const port = 3001;
-app.get('/api', nameMiddelware_1.default, (req, res) => {
-    let name = req.query.name;
-    let image = path_1.default.resolve(`full/${name}`);
-    let outDir = path_1.default.resolve(`thumbnul/${name}`);
-    let options = {};
-    req.query.h != null
-        ? (options.hight = parseInt(req.query.h))
-        : '';
-    req.query.w != null
-        ? (options.width = parseInt(req.query.w))
-        : '';
-    (0, sharp_1.default)(image)
-        .resize(options)
-        .toFile(outDir)
-        .then(() => {
-        res.status(200);
-        res.sendFile(path_1.default.resolve(`thumbnul/${req.query.name}`));
-    })
-        .catch((e) => {
-        console.log(e);
+app.use([nameMiddelware_1.default, existedImageMiddelware_1.default]);
+app.get('/api', (req, res) => {
+    const response = () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, imageProcess_1.default)(req, res);
     });
+    response();
 });
 app.listen(port, () => {
-    console.log(`server is runing on 127.0.0.1:${port}`);
+    console.log(`server is runing on http://127.0.0.1:${port}`);
 });
 exports.default = app;

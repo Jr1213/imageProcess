@@ -16,12 +16,12 @@ const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../../index"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('name middelware', () => {
-    it('move to function if name param exist', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api?name=img1.jpg');
+    it('move to function if all param exist', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/api?name=img1&w=200&h=200');
         expect(response.status).toBe(200);
     }));
     it('return not found if name paramter was not send', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api');
+        const response = yield request.get('/api?w=500');
         expect(response.status).toBe(404);
     }));
 });
