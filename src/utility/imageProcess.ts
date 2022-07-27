@@ -1,24 +1,21 @@
-import { Request, Response } from 'express';
 import path from 'path';
 import sharp from 'sharp';
 
-const process = (data: Request, res: Response): boolean => {
-  const imageName: string = `${data.query.name as string}`;
-  const height: number = parseInt(data.query.h as string);
-  const width: number = parseInt(data.query.w as string);
-  const outDir = path.resolve(`thumbnul/${imageName}-small.jpg`);
+const process = async (
+  name: string,
+  height: number,
+  width: number
+): Promise<[boolean, string]> => {
+  const outDir = path.resolve(`thumbnul/${name}-small.jpg`);
   try {
-    sharp(path.resolve(`full/${imageName}.jpg`))
+    await sharp(path.resolve(`full/${name}.jpg`))
       .resize({ height: height, width: width })
-      .toFile(outDir)
-      .then(() => {
-        res.sendFile(outDir);
-      });
-    return true;
+      .toFile(outDir);
+    return [true, outDir];
   } catch (e) {
     console.log(e);
 
-    return false;
+    return [false, 'unexpected error happend'];
   }
 };
 

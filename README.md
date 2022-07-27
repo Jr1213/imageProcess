@@ -11,4 +11,4 @@ how to make it work
 
 test it work
 
-http://127.0.0.1:3001?name=img1&w=500&h=500
+http://127.0.0.1:3001/api?name=img1&w=500&h=500

@@ -10,8 +10,6 @@ describe('test images endpoint', () => {
     expect(response.type).toEqual('image/jpeg');
     expect(response.statusCode).toEqual(200);
   });
-
- 
 });
 
 describe('end point failuer', () => {

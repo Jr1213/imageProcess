@@ -9,8 +9,16 @@ const port = 3001;
 app.use([nameMiddelWare, existedImage]);
 
 app.get('/api', (req, res) => {
+  const name: string = req.query.name as string;
+  const height: number = parseInt(req.query.h as string);
+  const width: number = parseInt(req.query.w as string);
   const response = async () => {
-    await process(req, res);
+    const data = await process(name, height, width);
+    if (data[0]) {
+      res.sendFile(data[1]);
+    } else {
+      res.end(data[1]);
+    }
   };
 
   response();

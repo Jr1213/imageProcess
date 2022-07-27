@@ -12,7 +12,7 @@ const existedImage = (req: Request, res: Response, next: Function): void => {
   readFile(imagePath, (err, data): void => {
     if (data == undefined) {
       res.status(404);
-      res.end('image not found')
+      res.end('image not found');
       return;
     } else {
       const dimitions = imageSize(imagePath);

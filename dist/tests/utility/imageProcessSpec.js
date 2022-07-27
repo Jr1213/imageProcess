@@ -13,18 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
-const sharp_1 = __importDefault(require("sharp"));
-const process = (name, height, width) => __awaiter(void 0, void 0, void 0, function* () {
-    const outDir = path_1.default.resolve(`thumbnul/${name}-small.jpg`);
-    try {
-        yield (0, sharp_1.default)(path_1.default.resolve(`full/${name}.jpg`))
-            .resize({ height: height, width: width })
-            .toFile(outDir);
-        return [true, outDir];
-    }
-    catch (e) {
-        console.log(e);
-        return [false, 'unexpected error happend'];
-    }
+const imageProcess_1 = __importDefault(require("../../utility/imageProcess"));
+describe('process work', () => {
+    const imagePath = path_1.default.resolve('thumbnul/img1-small.jpg');
+    it('process working correctely', () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, imageProcess_1.default)('img1', 500, 500);
+        expect(res).toEqual([true, imagePath]);
+    }));
 });
-exports.default = process;

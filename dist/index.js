@@ -20,8 +20,17 @@ const app = (0, express_1.default)();
 const port = 3001;
 app.use([nameMiddelware_1.default, existedImageMiddelware_1.default]);
 app.get('/api', (req, res) => {
+    const name = req.query.name;
+    const height = parseInt(req.query.h);
+    const width = parseInt(req.query.w);
     const response = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield (0, imageProcess_1.default)(req, res);
+        const data = yield (0, imageProcess_1.default)(name, height, width);
+        if (data[0]) {
+            res.sendFile(data[1]);
+        }
+        else {
+            res.end(data[1]);
+        }
     });
     response();
 });
