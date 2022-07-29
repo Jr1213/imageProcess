@@ -13,11 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
-const imageProcess_1 = __importDefault(require("../../utility/imageProcess"));
+const imageProcess_1 = require("../../utility/imageProcess");
 describe('process work', () => {
-    const imagePath = path_1.default.resolve('thumbnul/img1-small.jpg');
+    const imagePath = path_1.default.resolve('thumbnul/img1-500-500.jpg');
     it('process working correctely', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield (0, imageProcess_1.default)('img1', 500, 500);
-        expect(res).toEqual([true, imagePath]);
+        const res = yield (0, imageProcess_1.process)('img1', 500, 500);
+        expect(res.status).toEqual(true);
+        expect(res.content).toEqual(imagePath);
+    }));
+});
+describe('check if image exist', () => {
+    const imagePath = path_1.default.resolve('thumbnul/img1-500-500.jpg');
+    const notExistImage = path_1.default.resolve('thumbnul/img1-1000-1000.jpg');
+    it('return true if no image exist', () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, imageProcess_1.imageExist)(imagePath);
+        expect(res.status).toEqual(true);
+        expect(res.content).toEqual(imagePath);
+    }));
+    it('return false  if  image exist', () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, imageProcess_1.imageExist)(notExistImage);
+        expect(res.status).toEqual(false);
+        expect(res.content).toEqual('image not here');
     }));
 });

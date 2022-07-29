@@ -1,4 +1,3 @@
-import nameMiddelWare from '../../middelware/nameMiddelware';
 import supertest from 'supertest';
 import app from '../../index';
 

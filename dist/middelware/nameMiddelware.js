@@ -15,10 +15,6 @@ const nameMiddelWare = (req, res, next) => {
             res.end('image not found');
         }
     });
-    if (imageName && height && width) {
-        next();
-        return;
-    }
     if (!imageName) {
         res.status(404);
         res.end('name is required');
@@ -32,6 +28,10 @@ const nameMiddelWare = (req, res, next) => {
     if (!width) {
         res.status(404);
         res.end('width is required');
+        return;
+    }
+    if (imageName && height && width) {
+        next();
         return;
     }
 };
