@@ -7,36 +7,30 @@ const nameMiddelWare = (
   res: Response,
   next: NextFunction
 ): void => {
-  const imageName = req.query.name;
-  const height = req.query.h;
-  const width = req.query.w;
+  const imageName: string = req.query.name as unknown as string;
+  const height: number = req.query.h as unknown as number;
+  const width: number = req.query.w as unknown as number;
   readFile(path.resolve(`full/${imageName}.jpg`), (err, data) => {
     if (!data) {
       res.status(404);
       res.end('image not found');
     }
   });
-  if (!imageName) {
+
+  if (!width || width <= 0 || isNaN(width)) {
+    console.log(isNaN(width));
+
     res.status(404);
-    res.end('name is required');
+    res.end('width invaild');
+    return;
+  }
+  if (!height || height <= 0 || isNaN(height)) {
+    res.status(404);
+    res.end('heigth invaild');
     return;
   }
 
-  if (!height) {
-    res.status(404);
-    res.end('height is required');
-    return;
-  }
-
-  if (!width) {
-    res.status(404);
-    res.end('width is required');
-    return;
-  }
-  if (imageName && height && width) {
-    next();
-    return;
-  }
+  next();
 };
 
 export default nameMiddelWare;

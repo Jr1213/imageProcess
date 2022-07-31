@@ -15,24 +15,17 @@ const nameMiddelWare = (req, res, next) => {
             res.end('image not found');
         }
     });
-    if (!imageName) {
+    if (!width || width <= 0 || isNaN(width)) {
+        console.log(isNaN(width));
         res.status(404);
-        res.end('name is required');
+        res.end('width invaild');
         return;
     }
-    if (!height) {
+    if (!height || height <= 0 || isNaN(height)) {
         res.status(404);
-        res.end('height is required');
+        res.end('heigth invaild');
         return;
     }
-    if (!width) {
-        res.status(404);
-        res.end('width is required');
-        return;
-    }
-    if (imageName && height && width) {
-        next();
-        return;
-    }
+    next();
 };
 exports.default = nameMiddelWare;

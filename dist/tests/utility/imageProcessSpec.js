@@ -21,6 +21,11 @@ describe('process work', () => {
         expect(res.status).toEqual(true);
         expect(res.content).toEqual(imagePath);
     }));
+    it('resize function not throwing error', () => {
+        expect(() => __awaiter(void 0, void 0, void 0, function* () {
+            yield (0, imageProcess_1.process)('img1', 500, 500);
+        })).not.toThrow();
+    });
 });
 describe('check if image exist', () => {
     const imagePath = path_1.default.resolve('thumbnul/img1-500-500.jpg');
@@ -30,6 +35,11 @@ describe('check if image exist', () => {
         expect(res.status).toEqual(true);
         expect(res.content).toEqual(imagePath);
     }));
+    it('check if  image exist function not throwing error', () => {
+        expect(() => __awaiter(void 0, void 0, void 0, function* () {
+            yield (0, imageProcess_1.imageExist)(imagePath);
+        })).not.toThrow();
+    });
     it('return false  if  image exist', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, imageProcess_1.imageExist)(notExistImage);
         expect(res.status).toEqual(false);

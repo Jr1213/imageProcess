@@ -9,6 +9,12 @@ describe('process work', () => {
     expect(res.status).toEqual(true);
     expect(res.content).toEqual(imagePath);
   });
+
+  it('resize function not throwing error', () => {
+    expect(async () => {
+      await process('img1', 500, 500);
+    }).not.toThrow();
+  });
 });
 
 describe('check if image exist', () => {
@@ -19,7 +25,11 @@ describe('check if image exist', () => {
     expect(res.status).toEqual(true);
     expect(res.content).toEqual(imagePath);
   });
-
+  it('check if  image exist function not throwing error', () => {
+    expect(async () => {
+      await imageExist(imagePath);
+    }).not.toThrow();
+  });
   it('return false  if  image exist', async () => {
     const res = await imageExist(notExistImage);
     expect(res.status).toEqual(false);
